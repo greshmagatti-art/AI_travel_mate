@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AI Travel Mate - Login</title>
   <style>
-    /* (YOUR EXACT SAME CSS — UNCHANGED) */
     *{margin:0;padding:0;box-sizing:border-box;}
     body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:linear-gradient(180deg,#f0f8ff 0%,#ffffff 100%);min-height:100vh;display:flex;justify-content:center;align-items:center;color:#333;}
     .login-container{background:white;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,0.1);padding:40px;width:100%;max-width:400px;margin:20px;}
@@ -62,34 +61,42 @@
   </div>
 </div>
 
-<!-- Firebase SDK -->
-<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js"></script>
+<!-- ✅ Firebase SDK (compat version for older syntax) -->
+<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
 
 <script>
   const firebaseConfig = {
-  apiKey: "AIzaSyCeCZ-OK8uTQV-42QrwmOPfV8yHH_3DarU",
-  authDomain: "ai-travel-mate-475004.firebaseapp.com",
-  projectId: "ai-travel-mate-475004",
-  storageBucket: "ai-travel-mate-475004.firebasestorage.app",
-  messagingSenderId: "259157862229",
-  appId: "1:259157862229:web:216b02479e26f2fc2cf1dc"
-};
+    apiKey: "AIzaSyCeCZ-OK8uTQV-42QrwmOPfV8yHH_3DarU",
+    authDomain: "ai-travel-mate-475004.firebaseapp.com",
+    projectId: "ai-travel-mate-475004",
+    storageBucket: "ai-travel-mate-475004.firebasestorage.app",
+    messagingSenderId: "259157862229",
+    appId: "1:259157862229:web:216b02479e26f2fc2cf1dc"
+  };
 
+  // Initialize Firebase
   const app = firebase.initializeApp(firebaseConfig);
   const auth = firebase.auth();
 
-  document.getElementById('loginForm').addEventListener('submit', (e)=>{
+  // ✅ Corrected login event
+  const loginForm = document.getElementById('loginForm');
+  const emailInput = document.getElementById('email');
+  const passwordInput = document.getElementById('password');
+
+  loginForm.addEventListener('submit', (e) => {
     e.preventDefault();
+
     const email = emailInput.value;
     const password = passwordInput.value;
 
     auth.signInWithEmailAndPassword(email, password)
-      .then(()=>{
-        window.location.href = 'trip-planner.html';
+      .then((userCredential) => {
+        alert("Login successful!");
+        window.location.href = "trip-planner.html";
       })
-      .catch(err=>{
-        alert(err.message);
+      .catch((error) => {
+        alert(error.message);
       });
   });
 </script>
